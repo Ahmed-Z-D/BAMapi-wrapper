@@ -232,7 +232,6 @@ def cours_virement(
 
 # Marché obligataire:
 
-
 def courbe_BDT(date: str = "") -> RETRUNED_T:
     """COURBE DES TAUX DE REFERENCE DES BONS DU TRESOR (BDT).
 
@@ -273,9 +272,7 @@ def courbe_BDT(date: str = "") -> RETRUNED_T:
         RateLimitExceededError: Rate limit on GET requests has exceeded.
         Possibly any exception that has requests.exceptions.RequestException as a base.
     """
-
-    if date:
-        _is_valid_date_string(date, "%Y-%m-%d")
+    _is_valid_date_string(date, "%Y-%m-%d")
 
     querystring = {
         "dateCourbe": date,
@@ -351,9 +348,7 @@ def resultat_oprts_politique_monetaire(
         Possibly any exception that has requests.exceptions.RequestException as a base.
     """
     _is_valid_date_string(date_adjudication_du, "%Y-%m-%d")
-
-    if date_adjudication_au:
-        _is_valid_date_string(date_adjudication_au, "%Y-%m-%d")
+    _is_valid_date_string(date_adjudication_au, "%Y-%m-%d")
 
     instrument = _search_instruments_const(instrument)
 
