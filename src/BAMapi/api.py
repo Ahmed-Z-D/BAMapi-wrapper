@@ -1,7 +1,7 @@
-from typing import Union, Dict, Any, List
-from datetime import datetime
-from pathlib import Path
 import configparser
+from datetime import datetime
+from typing import Union, Dict, Any, List
+from pathlib import Path
 
 import pandas as pd
 
@@ -12,6 +12,7 @@ from BAMapi.utils import (
     _search_instruments_const,
     _is_valid_date_string,
     _load_api_keys,
+    _initiate_config_file,
 )
 
 
@@ -25,7 +26,7 @@ def set_api_keys(
 ) -> bool:
     """ Set API key(s).
 
-    This function is specifically designed to store primary API keys for each provided service.
+    This function is designed to store primary API keys for each provided service.
     It is important to note that each service has its own unique set of API keys, with two types of
     keys available for each service: primary keys and secondary keys.
 
@@ -66,7 +67,13 @@ def set_api_keys(
 
     return True
 
-# Marché des changes
+def api_keys() -> None:
+    """Exhibit the API keys provided by the user."""
+    print(KEYS)
+
+#===============================
+#    Marché des changes
+#===============================
 
 def _base_foreign_exchange_rates(
     url: str,
@@ -115,7 +122,7 @@ def _base_foreign_exchange_rates(
 
 def cours_BBE(
     currency_label: str = "",
-    date_time: Union[datetime, str] = ""
+    date_time: str = ""
 ) -> RETRUNED_T:
     """Les cours des billets de Banque étrangers de la journée.
 
@@ -366,7 +373,7 @@ def resultats_emissions_BT(date_reglement: str):
 
     Args:
         date_reglement:
-            Date règlement de la séance d'adjudication Format(AAAA-MM-JJ)
+            Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) exp; "2022-04-04"
 
     Returns:
 
