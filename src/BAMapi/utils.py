@@ -60,8 +60,8 @@ def _base_bam_api_get_request(
 
     return response.json()
 
-def _is_valid_date_string(date_string: str, date_formats: Union[str, List[str]], strict = False):
-    """Validate date string formate."""
+def _is_valid_date_string(date_string: str, date_formats: Union[str, list[str]], strict: bool=False) -> bool:
+    """Validate date string format."""
 
     if date_string == "" and not strict:
         return True
@@ -77,17 +77,18 @@ def _is_valid_date_string(date_string: str, date_formats: Union[str, List[str]],
         try:
             datetime.strptime(date_string, date_format)
             return True
-        except TypeError as e:
-            raise e
         except ValueError:
             pass
 
-    raise ValueError(f"The provided date string is not in a valid format. Please use one of the following valid date format(s): {date_formats}.")
+    raise ValueError(
+        f"The provided date string is not in a valid format. Please use one of the following valid date format(s): {date_formats}."
+        )
+
 
 def _check_currency_label(currency_label: str) -> bool:
     """Verify whether the provided string adheres to the pattern of a currency label."""
     if not isinstance(currency_label, str):
-        raise ValueError(f"Currency label must be of type {str.__name__}")
+        raise ValueError(f"Currency label must be of type string.")
 
     if currency_label:
         if CURRENCY_PATTERN.match(currency_label):
@@ -119,7 +120,7 @@ def _search_instruments_const(instrument: str) -> str:
         f"Invalid instrument dtype. Please verify the list of availble instruments"
     )
 
-def _initiate_config_file(config_file_path: Union[str, Path]) -> None:
+def _initiate_config_file(config_file_path: Path) -> None:
     """Initiate the default config.ini file.
 
     Args:
@@ -140,10 +141,14 @@ def _initiate_config_file(config_file_path: Union[str, Path]) -> None:
         with open(config_file_path, "w") as f:
             config.write(f)
 
-def _load_api_keys() -> dict:
+def _load_api_keys(_test_path=False) -> dict:
     """ Lead Api Keys to KEYS const."""
+    if not _test_path:
+        config_file_path = Path(__file__).with_name("config.ini")
+    else:
+        config_file_path = _test_path
 
-    config_file_path = Path(__file__).with_name("config.ini")
+
     _initiate_config_file(config_file_path)
     config = configparser.ConfigParser()
     config.read(config_file_path)
