@@ -45,6 +45,7 @@ def test_base_bam_api_get_request_raises_errors(
         ("2023-01-01", ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"]),
         ("2023-05-13T14:30:00.000000Z", ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"]),
         ("2024-01-01", "%Y-%m-%d"),
+        ("", "%Y-%m-%d"),
     ],
 )
 def test_is_valid_date_string(date, date_format):
@@ -52,17 +53,19 @@ def test_is_valid_date_string(date, date_format):
 
 
 @pytest.mark.parametrize(
-    "date, date_format",
+    "date, date_format, strict",
     [
-        (10, ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"]),
-        (object, 10),
-        ("05-2023-13T14:30:00.000000Z", ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"]),
-        ("2024-00-00", "%Y-%m-%d"),
+        (10, ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"], False),
+        (object, 10, False),
+        ("05-2023-13T14:30:00.000000Z", ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S.%fZ"], False),
+        ("2024-00-00", "%Y-%m-%d", False),
+        ("", "%Y-%m-%d", True),
+        (" ", "%Y-%m-%d", False),
     ],
 )
-def test_is_valid_date_string_errors(date, date_format):
+def test_is_valid_date_string_errors(date, date_format, strict):
     with pytest.raises((ValueError, TypeError)):
-        _is_valid_date_string(date, date_format)
+        _is_valid_date_string(date, date_format, strict)
 
 
 def test_check_currency_label(faker):
@@ -116,14 +119,14 @@ def test_initiate_config_file(tmp_path):
     assert config["APIkeys"]["marche_obligataire"] == ""
 
 
-@pytest.mark.xfail(reason = "Set API keys does not work as intended")
 def test_load_api_keys(tmp_path):
-    __file__ = os.path.join(tmp_path, "config.inin")
     config_file_path = tmp_path.parent / "config.ini"
 
-    api_keys = _load_api_keys()
+    api_keys = _load_api_keys(config_file_path)
 
     valid_keys = ["marche_adjud_des_BT", "marche_des_changes", "marche_obligataire"]
 
     assert set(valid_keys) == set([k for k in api_keys.keys()])
     assert set(["", "", ""]) == set([v for v in api_keys.values()])
+
+
