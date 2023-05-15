@@ -1,0 +1,5 @@
+tox==4.5.1
+Faker==18.7.0
+pytest==7.3.1
+pytest-cov==4.0.0
+pytest-faker==2.0.0
