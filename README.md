@@ -1,14 +1,17 @@
 #  BAM Api Wrapper
 
-![Tests](https://github.com/mCodingLLC/SlapThatLikeButton-TestingStarterProject/actions/workflows/tests.yml/badge.svg)
+BAMapi is a Python wrapper that streamlines the process of accessing and utilizing Bank Al-Maghrib's API. This API offers a set of resources provided by the Moroccan central bank for developers to use in their own applications.
 
-BAMapi is a lightweight and user-friendly Python wrapper that streamlines the process of accessing and utilizing the Bank Al-Maghrib API. This API offers a set of resources provided by the Moroccan central bank for developers to use in their own applications. By using BAMapi, developers can more easily explore and utilize the various APIs that are available from the Moroccan central bank.
+To avoid any confusion while utilizing this package, the naming of the functions intentionally reflects the names of the endpoints they resemble in the API documentation. This approach ensures consistency and clarity in the function naming convention, making it easier for users to understand and work with the package.
 
-BAMapi provides the responses from the endpoint as received without any changes. However, BAMapi validates the inputs sent to the endpoint to maintain data integrity. Each input is checked against the expected format or data type according to the API documentation. This validation process helps prevent the occurrence of errors or inconsistencies which may result from incorrect or invalid data sent to the endpoint.
+## How to install the package?
 
-To avoid any confusion while utilizing this package, the function names have been deliberately maintained as they are named in the API documentation, with minimal to no modifications. This approach ensures consistency and clarity in the function naming convention, making it easier for users to understand and work with the package. Therefore, users may encounter non-English function names while working with the package, but they can rest assured that these names accurately reflect the corresponding functions provided by the API documentation.
+As this package has not yet been published in PyPI, you will need to clone the repository and subsequently install the package locally by utilizing the following command:
+```
+pip install BAMapi
+```
 
-## How to Access To the API?
+## What is the process for accessing the API?
 
 In order to utilize the services provided by the Bank Al-Maghrib API, developers are required to obtain unique API keys. This can be done with ease by accessing the developer services platform, which is provided by Bank Al-Maghrib, at the following URL: https://apihelpdesk.centralbankofmorocco.ma/.
 
@@ -17,12 +20,17 @@ Upon obtaining your API key(s), you may utilize the following function to store 
 ```python
 import BAMapi as bam
 
-bam.set_api_keys(marche_adjud_des_BT = 'XXXXXXXXXXXXXXXX',
+bam.set_api_keys(
+    marche_adjud_des_BT = 'XXXXXXXXXXXXXXXX',
     marche_des_changes = 'XXXXXXXXXXXXXXXX',
-    marche_obligataire = 'XXXXXXXXXXXXXXXX')
+    marche_obligataire = 'XXXXXXXXXXXXXXXX'
+)
 ```
 To overwrite a specific key, it is sufficient to call the function with the appropriate new key for the given service.
 
+```python
+bam.set_api_keys(marche_des_changes = 'XXXXXXXXXXXXXXXXX')
+```
 You can exhibit the provided API keys by:
 ```python
 bam.api_keys()
@@ -34,6 +42,7 @@ bam.api_keys()
 
 ```
 
+> Should you desire to irrevocably remove the keys, you may achieve this objective by deleting the "config.ini" file that is situated within the BAMapi directory of the source code.
 
 # Availble Services / Functions
 
@@ -59,7 +68,8 @@ bam.cours_BBE()
     'venteClientele': 100.57},
     ... ]
 ```
-Arguments:
+Parameters:
+
 - `currency_label` (Optional): retrieves exchange rates for all available currencies if no specific currency label, such as EUR or USD, is provided. The default value for the currency label is an empty string.
 
 - `date_time` (Optional): The date_time parameter denotes the precise date and time when the exchange rates were retrieved and should be presented as a string in accordance with the ISO 8601 date format. The accepted formats include` '%Y-%m-%d `and `'%Y-%m-%dT%H:%M:%S.%fZ`'. If no input is provided for the date_time parameter, the function will default to the current date and `T08:30:00 `as the default time.
@@ -79,22 +89,18 @@ bam.cours_virement()
     'libDevise': 'CAD',
     'moyen': 7.5001,
     'uniteDevise': 1},
-    .... ]
+    ... ]
 ```
 
-Arguments:
+Parameters:
 
-> Same arguments as Banknotes
+> The available optional parameters are `currency_label` and `date_time`. It is advised to consult the description of the aforementioned parameters in "Banknotes" for further details.
 
 ## Taux de référence des bons du Trésor
 
 ### Courbe des Taux BDT:
 
-It should be noted that the volume is expressed in millions of Moroccan Dirhams.
-
-Arguments:
-
-- date (optional): The date parameter must conform to the ISO 8601 date format, such as '2019-01-02'. In case a specific date is not provided, the function defaults to the previous day's date. The default value for the date parameter is an empty string.
+> It should be noted that the volume is expressed in millions of Moroccan Dirhams.
 
 ```python
 bam.courbe_BDT("2019-01-02")
@@ -117,6 +123,9 @@ bam.courbe_BDT("2019-01-02")
   'volume': 155.11},
 ..]
 ```
+Parameters:
+
+- `date` (optional): The date parameter must conform to the ISO 8601 date format, such as '2019-01-02'. In case a specific date is not provided, the function defaults to the previous day's date. The default value for the date parameter is an empty string.
 
 ## Marché des adjudications des bons du Trésor
 
@@ -151,31 +160,28 @@ bam.resultat_oprts_politique_monetaire(date_adjudication_du = "2023-01-01")
   ... ]
 ```
 
-Arguments:
+Parameters:
 
-        date_adjudication_du:
-            Date Adjudication Du Format(AAAA-MM-JJ)
+* `date_adjudication_du`: Date Adjudication Du Format(AAAA-MM-JJ)
 
-        date_adjudication_au :optional:
-            Date Adjudication Au Format(AAAA-MM-JJ).
+* `date_adjudication_au` (Optional): Date Adjudication Au Format(AAAA-MM-JJ).
 
-        instrument :optional:
-          Filter the results based on the name or acronym of an instrument.
-          The list of available instruments includes:
-                name                                   acronym
-            ---------------------------------------------------------
-           - avances_7j :                               AVANCES7J
-           - avances_24h :                              AVANCES24H
-           - opérations_de_réglage_fin_pension_livrée : PENSLRF
-           - opérations_de_long_terme_pension_livrée :  PENSLLT
-           - opérations_de_long_terme_prêt_garanti :    PRETGAR
+* `instrument` (Optional): Filter the results based on the name or acronym of an instrument. The list of available instruments includes:
+
+| Name                                     | Acronym   |
+|------------------------------------------|-----------|
+| avances_7j                               | AVANCES7J |
+| avances_24h                              | AVANCES24H|
+| opérations_de_réglage_fin_pension_livrée | PENSLRF   |
+| opérations_de_long_terme_pension_livrée  | PENSLLT   |
+| opérations_de_long_terme_prêt_garanti    | PRETGAR   |
+
 
 ### Résultats des émissions de bons du Trésor
 
 ```python
 bam.resultats_emissions_BT(date_reglement = "2022-04-04")
 ```
-
 ```python
 [{'dateReglement': '2022-04-04T00:00:00',
   'maturite': '2 ans',
@@ -197,15 +203,14 @@ bam.resultats_emissions_BT(date_reglement = "2022-04-04")
   'tauxPrixMoyenPondere': 0.0},
   ... ]
 ```
-Arguments:
+Parameters:
 
-        date_reglement:
-            Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) exp; "2022-04-04"
+* `date_reglement`: Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) ("2022-04-04")
 
 ### Résultats des opérations d'échange de bons du Trésor
 
 ```python
-bam.resultats_oprts_echange_BT(date_reglement = "2022-04-04")
+bam.resultats_oprts_echange_BT(date_reglement = "2023-04-25")
 ```
 ```python
 [{'maturite': '5 ans',
@@ -237,7 +242,6 @@ bam.resultats_oprts_echange_BT(date_reglement = "2022-04-04")
   ... ]
 ```
 
-Arguments:
+Parameters:
 
-        date_reglement:
-            Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) exp; "2022-04-04"
+* `date_reglement`: Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) ("2023-04-25")
