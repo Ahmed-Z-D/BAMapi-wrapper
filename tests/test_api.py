@@ -1,8 +1,6 @@
 import configparser
 import os
 
-from itertools import combinations
-
 import pytest
 from faker import Faker
 
