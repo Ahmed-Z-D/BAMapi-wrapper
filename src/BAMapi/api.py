@@ -3,8 +3,6 @@ from datetime import datetime
 from typing import Union, Dict, Any, List
 from pathlib import Path
 
-import pandas as pd
-
 from BAMapi.constants import INSTRUMENTS, API, KEYS
 from BAMapi.utils import (
     _base_bam_api_get_request,

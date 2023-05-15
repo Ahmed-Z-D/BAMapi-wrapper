@@ -4,7 +4,6 @@ import json
 
 import requests
 import pytest
-import pandas as pd
 
 @pytest.fixture(scope = "function")
 def mock_requests_get():
