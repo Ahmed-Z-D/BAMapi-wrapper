@@ -1,5 +1,7 @@
 #  BAM Api Wrapper
 
+![Tests](https://github.com/mCodingLLC/SlapThatLikeButton-TestingStarterProject/actions/workflows/tests.yml/badge.svg)
+
 BAMapi is a lightweight and user-friendly Python wrapper that streamlines the process of accessing and utilizing the Bank Al-Maghrib API. This API offers a set of resources provided by the Moroccan central bank for developers to use in their own applications. By using BAMapi, developers can more easily explore and utilize the various APIs that are available from the Moroccan central bank.
 
 BAMapi provides the responses from the endpoint as received without any changes. However, BAMapi validates the inputs sent to the endpoint to maintain data integrity. Each input is checked against the expected format or data type according to the API documentation. This validation process helps prevent the occurrence of errors or inconsistencies which may result from incorrect or invalid data sent to the endpoint.
