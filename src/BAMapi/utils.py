@@ -60,7 +60,7 @@ def _base_bam_api_get_request(
 
     return response.json()
 
-def _is_valid_date_string(date_string: str, date_formats: Union[str, list[str]], strict: bool=False) -> bool:
+def _is_valid_date_string(date_string: str, date_formats: Union[str, List[str]], strict: bool=False) -> bool:
     """Validate date string format."""
 
     if date_string == "" and not strict:
@@ -141,7 +141,7 @@ def _initiate_config_file(config_file_path: Path) -> None:
         with open(config_file_path, "w") as f:
             config.write(f)
 
-def _load_api_keys(_test_path=False) -> dict:
+def _load_api_keys(_test_path: bool = False) -> dict:
     """ Lead Api Keys to KEYS const."""
     if not _test_path:
         config_file_path = Path(__file__).with_name("config.ini")
