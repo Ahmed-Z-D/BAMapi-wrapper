@@ -8,7 +8,7 @@ To avoid any confusion while utilizing this package, the naming of the functions
 
 As this package has not yet been published in PyPI, you will need to clone the repository and subsequently install the package locally by utilizing the following command:
 ```
-pip install BAMapi
+pip install BAMapi-wrapper
 ```
 
 ## What is the process for accessing the API?
