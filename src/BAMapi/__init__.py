@@ -1,6 +1,6 @@
 from BAMapi.api import (
     set_api_keys,
-    api_keys,
+    display_api_keys,
     _base_foreign_exchange_rates,
     cours_BBE,
     cours_virement,

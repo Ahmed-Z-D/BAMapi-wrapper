@@ -6,15 +6,17 @@ from pathlib import Path
 from BAMapi.constants import INSTRUMENTS, API, KEYS
 from BAMapi.utils import (
     _base_bam_api_get_request,
+    _is_valid_date_string,
     _check_currency_label,
     _search_instruments_const,
-    _is_valid_date_string,
     _load_api_keys,
-    _initiate_config_file,
 )
 
 
 RETRUNED_T = List[Dict[str, Union[str, int, float]]]
+
+_FILE_PATH: Path = Path(__file__)
+
 
 
 def set_api_keys(
@@ -47,7 +49,8 @@ def set_api_keys(
 
     global KEYS
 
-    config_file_path = Path(__file__).with_name("config.ini")
+    config_file_path = _FILE_PATH.with_name("config.ini")
+
     config = configparser.ConfigParser()
     config.read(config_file_path)
 
@@ -65,7 +68,7 @@ def set_api_keys(
 
     return True
 
-def api_keys() -> None:
+def display_api_keys() -> None:
     """Exhibit the API keys provided by the user."""
     print(KEYS)
 

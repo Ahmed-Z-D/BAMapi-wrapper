@@ -33,7 +33,7 @@ bam.set_api_keys(marche_des_changes = 'XXXXXXXXXXXXXXXXX')
 ```
 You can exhibit the provided API keys by:
 ```python
-bam.api_keys()
+bam.display_api_keys()
 ```
 ```python
 {'marche_adjud_des_BT': 'XXXXXXXXXXXXXXXX',
