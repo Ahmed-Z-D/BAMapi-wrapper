@@ -18,13 +18,12 @@ RETRUNED_T = List[Dict[str, Union[str, int, float]]]
 _FILE_PATH: Path = Path(__file__)
 
 
-
 def set_api_keys(
     marche_adjud_des_BT: str = "",
     marche_des_changes: str = "",
     marche_obligataire: str = "",
 ) -> bool:
-    """ Set API key(s).
+    """Set API key(s).
 
     This function is designed to store primary API keys for each provided service.
     It is important to note that each service has its own unique set of API keys, with two types of
@@ -68,18 +67,19 @@ def set_api_keys(
 
     return True
 
+
 def display_api_keys() -> None:
     """Exhibit the API keys provided by the user."""
     print(KEYS)
 
-#===============================
+
+# ===============================
 #    Marché des changes
-#===============================
+# ===============================
+
 
 def _base_foreign_exchange_rates(
-    url: str,
-    currency_label: str = "",
-    date_time: str = ""
+    url: str, currency_label: str = "", date_time: str = ""
 ) -> RETRUNED_T:
     """Base Get Request to retrive data from the forieng exchange markt API.
 
@@ -116,15 +116,10 @@ def _base_foreign_exchange_rates(
         "date": date_time,
     }
 
-    return _base_bam_api_get_request(
-        KEYS["marche_des_changes"], url, querystring
-    )
+    return _base_bam_api_get_request(KEYS["marche_des_changes"], url, querystring)
 
 
-def cours_BBE(
-    currency_label: str = "",
-    date_time: str = ""
-) -> RETRUNED_T:
+def cours_BBE(currency_label: str = "", date_time: str = "") -> RETRUNED_T:
     """Les cours des billets de Banque étrangers de la journée.
 
     The exchange rates for foreign banknotes are made available for each day starting
@@ -171,15 +166,10 @@ def cours_BBE(
         Possibly any exception that has requests.exceptions.RequestException as a base.
     """
 
-    return _base_foreign_exchange_rates(
-        API["cours_BBE"],
-        currency_label,
-        date_time
-    )
+    return _base_foreign_exchange_rates(API["cours_BBE"], currency_label, date_time)
 
 
-def cours_virement(
-    currency_label: str = "", date_time: str = ""):
+def cours_virement(currency_label: str = "", date_time: str = ""):
     """Get the exchange rates for bank transfers of the current day or of a given day.
 
     The current exchange rates for bank transfers (Les cours virements de la journée)
@@ -225,13 +215,12 @@ def cours_virement(
     """
 
     return _base_foreign_exchange_rates(
-        API["cours_virement"],
-        currency_label,
-        date_time
+        API["cours_virement"], currency_label, date_time
     )
 
 
 # Marché obligataire:
+
 
 def courbe_BDT(date: str = "") -> RETRUNED_T:
     """COURBE DES TAUX DE REFERENCE DES BONS DU TRESOR (BDT).
@@ -283,13 +272,12 @@ def courbe_BDT(date: str = "") -> RETRUNED_T:
         KEYS["marche_obligataire"], API["courbe_BDT"], querystring
     )
 
+
 # Marché des adjudications des bons du Trésor:
 
 
 def resultat_oprts_politique_monetaire(
-    date_adjudication_du: str,
-    date_adjudication_au: str = "",
-    instrument: str = ""
+    date_adjudication_du: str, date_adjudication_au: str = "", instrument: str = ""
 ) -> RETRUNED_T:
     """Résultat des opérations de la politique monétaire.
 
@@ -381,7 +369,6 @@ def resultats_emissions_BT(date_reglement: str):
     """
 
     _is_valid_date_string(date_reglement, "%Y-%m-%d", True)
-
 
     querystring = {"dateReglement": date_reglement}
 

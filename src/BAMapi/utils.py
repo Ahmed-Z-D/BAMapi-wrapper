@@ -11,10 +11,10 @@ from BAMapi.exceptions import InvalidAPIKeys, RateLimitExceededError
 
 CURRENCY_PATTERN = re.compile(r"^[A-Z]{3}$")
 
+_FILE_PATH: Path = Path(__file__)
 
-def _base_bam_api_get_request(
-    sub_key: str, url: str, querystring: dict
-) -> List[Dict]:
+
+def _base_bam_api_get_request(sub_key: str, url: str, querystring: dict) -> List[Dict]:
     """Base intercation function with BAM's API.
 
     Args:
@@ -60,7 +60,10 @@ def _base_bam_api_get_request(
 
     return response.json()
 
-def _is_valid_date_string(date_string: str, date_formats: Union[str, List[str]], strict: bool=False) -> bool:
+
+def _is_valid_date_string(
+    date_string: str, date_formats: Union[str, List[str]], strict: bool = False
+) -> bool:
     """Validate date string format."""
 
     if date_string == "" and not strict:
@@ -82,7 +85,7 @@ def _is_valid_date_string(date_string: str, date_formats: Union[str, List[str]],
 
     raise ValueError(
         f"The provided date string is not in a valid format. Please use one of the following valid date format(s): {date_formats}."
-        )
+    )
 
 
 def _check_currency_label(currency_label: str) -> bool:
@@ -96,8 +99,8 @@ def _check_currency_label(currency_label: str) -> bool:
         else:
             raise ValueError(f"{currency_label} is not a valid currency label.")
 
-def _search_instruments_const(instrument: str) -> str:
 
+def _search_instruments_const(instrument: str) -> str:
     # In order to prevent ImportError due to  circular import, we use this import statment here.
     # TODO: Refactore the code to prevent circular import.
     from BAMapi.constants import INSTRUMENTS
@@ -107,9 +110,7 @@ def _search_instruments_const(instrument: str) -> str:
 
     if isinstance(instrument, str):
         for name, acronym in INSTRUMENTS.items():
-            if (instrument.upper() == name.upper()) or (
-                instrument.upper() == acronym
-            ):
+            if (instrument.upper() == name.upper()) or (instrument.upper() == acronym):
                 return acronym
 
         raise ValueError(
@@ -120,15 +121,16 @@ def _search_instruments_const(instrument: str) -> str:
         f"Invalid instrument dtype. Please verify the list of availble instruments"
     )
 
-def _initiate_config_file(config_file_path: Path) -> None:
-    """Initiate the default config.ini file.
 
-    Args:
-        config_file_path; Path to the config.ini file.
+def _initiate_config_file() -> None:
+    """Initiate the default config.ini file.
 
     Returns:
         None
     """
+
+    config_file_path = _FILE_PATH.with_name("config.ini")
+
     if not config_file_path.exists():
         config = configparser.ConfigParser()
 
@@ -141,15 +143,12 @@ def _initiate_config_file(config_file_path: Path) -> None:
         with open(config_file_path, "w") as f:
             config.write(f)
 
-def _load_api_keys(_test_path: bool = False) -> dict:
-    """ Lead Api Keys to KEYS const."""
-    if not _test_path:
-        config_file_path = Path(__file__).with_name("config.ini")
-    else:
-        config_file_path = _test_path
 
+def _load_api_keys() -> dict:
+    """Lead Api Keys to KEYS const."""
+    config_file_path = _FILE_PATH.with_name("config.ini")
 
-    _initiate_config_file(config_file_path)
+    _initiate_config_file()
     config = configparser.ConfigParser()
     config.read(config_file_path)
 
