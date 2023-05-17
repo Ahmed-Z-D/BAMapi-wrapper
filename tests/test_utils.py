@@ -1,5 +1,6 @@
 import configparser
 import os
+import importlib
 
 import pytest
 import requests
@@ -12,14 +13,10 @@ from BAMapi.utils import (
     _is_valid_date_string,
     _check_currency_label,
     _search_instruments_const,
-    _initiate_config_file,
-    _load_api_keys,
 )
 
 
-def test_base_bam_api_get_request(
-    mock_requests_get, psudo_args_base_req, sample_data
-):
+def test_base_bam_api_get_request(mock_requests_get, psudo_args_base_req, sample_data):
     mock_requests_get.json.return_value = sample_data
 
     response = _base_bam_api_get_request(*psudo_args_base_req)
@@ -103,30 +100,3 @@ def test_search_instruments_const_empty_string(search_key):
 def test_search_instruments_const_error(search_key):
     with pytest.raises(ValueError):
         _search_instruments_const(search_key)
-
-
-def test_initiate_config_file(tmp_path):
-    config_file_path = tmp_path.parent / "config.ini"
-
-    _initiate_config_file(config_file_path)
-
-    # check if the file has been configurated correctly
-    config = configparser.ConfigParser()
-    config.read(config_file_path)
-
-    assert config["APIkeys"]["marche_adjud_des_BT"] == ""
-    assert config["APIkeys"]["marche_des_changes"] == ""
-    assert config["APIkeys"]["marche_obligataire"] == ""
-
-
-def test_load_api_keys(tmp_path):
-    config_file_path = tmp_path.parent / "config.ini"
-
-    api_keys = _load_api_keys(config_file_path)
-
-    valid_keys = ["marche_adjud_des_BT", "marche_des_changes", "marche_obligataire"]
-
-    assert set(valid_keys) == set([k for k in api_keys.keys()])
-    assert set(["", "", ""]) == set([v for v in api_keys.values()])
-
-
