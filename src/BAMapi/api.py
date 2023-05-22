@@ -299,7 +299,10 @@ def resultat_oprts_politique_monetaire(
            - opérations_de_long_terme_pension_livrée :  PENSLLT
            - opérations_de_long_terme_prêt_garanti :    PRETGAR
 
-          You can obtain this list as a dict by runnig: function name.
+          You can obtain this list as a Mapping Proxy by:
+
+            >>> import BAMapi as bam
+            >>> bam.INSTRUMENTS
 
     Returns:
         A list that contains multiple dictionaries. For instance:
