@@ -35,7 +35,7 @@ You can exhibit the provided API keys by:
 ```python
 bam.display_api_keys()
 ```
-```python
+```bash
 {'marche_adjud_des_BT': 'XXXXXXXXXXXXXXXX',
 'marche_des_changes': 'XXXXXXXXXXXXXXXX',
 'marche_obligataire': 'XXXXXXXXXXXXXXXX'}
@@ -55,7 +55,7 @@ As per the API's documentation, the exchange rates for foreign banknotes are acc
 ```python
 bam.cours_BBE()
 ```
-```python
+```bash
   [{'achatClientele': 2.5085,
     'date': '2023-05-11T08:30:00',
     'libDevise': 'QAR',
@@ -80,7 +80,7 @@ According to the API's documentation, exchange rates for transfers made on the c
 ```python
 bam.cours_virement()
 ```
-```python
+```bash
   [{'date': '2023-05-11T12:30:00',
     'libDevise': 'EUR',
     'moyen': 10.9884,
@@ -105,7 +105,7 @@ Parameters:
 ```python
 bam.courbe_BDT("2019-01-02")
 ```
-```python
+```bash
 [{'dateEcheance': '2046-02-19',
   'dateValeur': '2018-12-28',
   'dateCourbe': '2019-01-02',
@@ -135,7 +135,7 @@ Parameters:
 bam.resultat_oprts_politique_monetaire(date_adjudication_du = "2023-01-01")
 ```
 
-```python
+```bash
 [{'dateAdjudication': '2023-01-04',
   'dateValeur': '2023-01-05',
   'dateEcheance': '2023-01-12',
@@ -176,13 +176,27 @@ Parameters:
 | opérations_de_long_terme_pension_livrée  | PENSLLT   |
 | opérations_de_long_terme_prêt_garanti    | PRETGAR   |
 
+You can obtain this list as a Mapping Proxy by:
+
+```python
+bam.INSTRUMENTS
+```
+
+```bash
+mappingproxy({'avances_7j': 'AVANCES7J',
+              'avances_24h': 'AVANCES24H',
+              'opérations_de_réglage_fin_pension_livrée': 'PENSLRF',
+              'opérations_de_long_terme_pension_livrée': 'PENSLLT',
+              'opérations_de_long_terme_prêt_garanti': 'PRETGAR'})
+
+```
 
 ### Résultats des émissions de bons du Trésor
 
 ```python
 bam.resultats_emissions_BT(date_reglement = "2022-04-04")
 ```
-```python
+```bash
 [{'dateReglement': '2022-04-04T00:00:00',
   'maturite': '2 ans',
   'caracteristique': '16/09/2024,1.85',
@@ -212,7 +226,7 @@ Parameters:
 ```python
 bam.resultats_oprts_echange_BT(date_reglement = "2023-04-25")
 ```
-```python
+```bash
 [{'maturite': '5 ans',
   'dateReglement': '2023-04-25T00:00:00',
   'dateEcheance': '2024-04-15T00:00:00',
