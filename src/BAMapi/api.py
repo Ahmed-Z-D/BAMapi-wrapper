@@ -169,7 +169,7 @@ def cours_BBE(currency_label: str = "", date_time: str = "") -> RETRUNED_T:
     return _base_foreign_exchange_rates(API["cours_BBE"], currency_label, date_time)
 
 
-def cours_virement(currency_label: str = "", date_time: str = ""):
+def cours_virement(currency_label: str = "", date_time: str = "") -> RETRUNED_T:
     """Get the exchange rates for bank transfers of the current day or of a given day.
 
     The current exchange rates for bank transfers (Les cours virements de la journée)
@@ -355,7 +355,7 @@ def resultat_oprts_politique_monetaire(
     )
 
 
-def resultats_emissions_BT(date_reglement: str):
+def resultats_emissions_BT(date_reglement: str) -> RETRUNED_T:
     """Résultats des émissions de bons du Trésor.
 
     Args:
@@ -363,6 +363,27 @@ def resultats_emissions_BT(date_reglement: str):
             Date règlement de la séance d'adjudication Format(AAAA-MM-JJ) exp; "2022-04-04"
 
     Returns:
+        A list that contains multiple dictionaries. For instance:
+
+        [{'dateReglement': '2022-04-04T00:00:00',
+          'maturite': '2 ans',
+          'caracteristique': '16/09/2024,1.85',
+          'mntPropose': 1560.0,
+          'tauxPrixMin': 99.62,
+          'tauxPrixMax': 99.92,
+          'mntAdjuge': 0.0,
+          'tauxPrixlimite': 0.0,
+          'tauxPrixMoyenPondere': 0.0},
+         {'dateReglement': '2022-04-04T00:00:00',
+          'maturite': '30 ans',
+          'caracteristique': '20/02/2051,3.45',
+          'mntPropose': 100.0,
+          'tauxPrixMin': 99.89,
+          'tauxPrixMax': 99.89,
+          'mntAdjuge': 0.0,
+          'tauxPrixlimite': 0.0,
+          'tauxPrixMoyenPondere': 0.0},
+          ... ]
 
     Raise:
         ValueError: Invalid input(s).
@@ -388,6 +409,22 @@ def resultats_oprts_echange_BT(date_reglement: str) -> RETRUNED_T:
             Date règlement de la séance d'adjudication Format(AAAA-MM-JJ)
 
     Returns:
+         A list that contains multiple dictionaries. For instance:
+
+        [{'maturite': '5 ans',
+          'dateReglement': '2023-04-25T00:00:00',
+          'dateEcheance': '2024-04-15T00:00:00',
+          'tauxNominal': 2.85,
+          'mntPropose': 855.0,
+          'mntRetenu': 855.0,
+          'maturiteRemp': '2 ans',
+          'dateEcheanceRemp': '2025-09-15T00:00:00',
+          'tauxNominallRemp': 3.9,
+          'prixMin': 99.74,
+          'prixMax': 99.75,
+          'mntRetenuRemp': 852.3,
+          'pmp': 100.42},
+          ... ]
 
     Raise:
         ValueError: Invalid input(s).
