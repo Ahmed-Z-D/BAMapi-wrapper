@@ -98,6 +98,7 @@ def _check_currency_label(currency_label: str) -> bool:
             return True
         else:
             raise ValueError(f"{currency_label} is not a valid currency label.")
+    return False
 
 
 def _search_instruments_const(instrument: str) -> str:
