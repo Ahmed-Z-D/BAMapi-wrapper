@@ -1,12 +1,10 @@
+import json
 from unittest.mock import patch
 from pathlib import Path
-import json
 from dataclasses import dataclass
-import importlib
 
 import requests
 import pytest
-from faker import Faker
 
 from BAMapi.utils import _initiate_config_file
 
@@ -29,13 +27,13 @@ def mock_requests_get():
 
 @pytest.fixture(scope="session", name="psudo_args_base_req")
 def psudo_args_for_base_bam_api_get_request():
-    return "01651320651", "https://invalid_url.BAMAPI", {"pusdo": "psudo"}
+    return "01651320651", "https://invalid_url.BAMAPI", {"key": "value"}
 
 
 @pytest.fixture(scope="session")
 def sample_data():
     path = Path(__file__).with_name("sample_cours_bbe.json")
-    path = new_path = path.parent / "samples" / path.name
+    path = path.parent / "samples" / path.name
     with open(path, "r") as f:
         return json.load(f)
 
@@ -47,15 +45,14 @@ def config_file_path(tmp_path):
 
 
 @pytest.fixture(scope="function")
-def psudo_conf_file(config_file_path, monkeypatch):
-    target_path_utils = importlib.import_module("BAMapi.utils")
-    monkeypatch.setattr(target_path_utils, "_FILE_PATH", config_file_path)
+def psudo_conf_file(config_file_path, monkeypatch, faker):
+    monkeypatch.setattr("BAMapi.utils._FILE_PATH", config_file_path)
 
     _initiate_config_file()
 
-    marche_adjud_des_BT = Faker().ean13()
-    marche_des_changes = Faker().ean13()
-    marche_obligataire = Faker().ean13()
+    marche_adjud_des_BT = faker.ean13()
+    marche_des_changes = faker.ean13()
+    marche_obligataire = faker.ean13()
 
     return PsudoConfFileData(
         marche_adjud_des_BT,

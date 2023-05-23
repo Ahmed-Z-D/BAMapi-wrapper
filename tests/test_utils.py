@@ -1,10 +1,4 @@
-import configparser
-import os
-import importlib
-
 import pytest
-import requests
-
 
 from BAMapi.exceptions import InvalidAPIKeys, RateLimitExceededError
 from BAMapi.constants import INSTRUMENTS
