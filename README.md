@@ -1,5 +1,7 @@
 #  BAM Api Wrapper
 
+[![codecov](https://codecov.io/gh/Ahmed-Z-D/BAMapi-wrapper/branch/main/graph/badge.svg?token=GV7UBRG2ZN)](https://codecov.io/gh/Ahmed-Z-D/BAMapi-wrapper)
+
 BAMapi is a Python wrapper that streamlines the process of accessing and utilizing Bank Al-Maghrib's API. This API offers a set of resources provided by the Moroccan central bank for developers to use in their own applications.
 
 To avoid any confusion while utilizing this package, the naming of the functions intentionally reflects the names of the endpoints they resemble in the API documentation. This approach ensures consistency and clarity in the function naming convention, making it easier for users to understand and work with the package.
